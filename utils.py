@@ -114,9 +114,8 @@ def load_all_styles():
     load_fonts()
     load_css()
     
-    # Загружаем Material Icons для элементов со стрелочками
+    # Стили для Material Icons (шрифт загружается через font_style.css)
     st.markdown("""
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
         span.material-icons {
             font-family: 'Material Icons' !important;
