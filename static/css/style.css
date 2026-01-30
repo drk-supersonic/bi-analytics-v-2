@@ -44,7 +44,10 @@
 
 /* ИСКЛЮЧЕНИЕ: для элементов со стрелочками (Material Icons) НЕ применяем Inter */
 span.material-icons,
-span[class*="material-icons"] {
+span[class*="material-icons"],
+span[data-testid="stIconMaterial"],
+span[class*="stIconMaterial"],
+span[class*="st-emotion-cache-1c9yjad"] {
     font-family: 'Material Icons', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     font-weight: normal !important;
     font-style: normal !important;
