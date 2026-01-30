@@ -4,6 +4,9 @@
     /* Цвета фона темы */
     --themeBackgroundColor: white;  
     /* --themeBackgroundColor: #0e1117;      */
+    
+    /* Основной шрифт */
+    --mainFont: 'Inter', sans-serif;
 }
 
 /* 
@@ -31,6 +34,12 @@
 /* Принудительная темная тема - использует CSS переменную */
 .stApp {
     background-color: var(--themeBackgroundColor);
+    font-family: var(--mainFont);
+}
+
+/* Применение основного шрифта ко всему приложению */
+* {
+    font-family: var(--mainFont);
 }
 
 /* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */

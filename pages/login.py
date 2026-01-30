@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
 from auth import authenticate, generate_reset_token, reset_password, verify_reset_token, init_db, get_user_by_username
-from utils import load_css
+from utils import load_css, load_all_styles
 
 # Инициализация базы данных
 init_db()
@@ -26,8 +26,8 @@ st.set_page_config(
     }
 )
 
-# Загрузка CSS стилей из внешнего файла
-load_css()
+# Загрузка CSS стилей из внешнего файла (включая шрифты)
+load_all_styles()
 
 # Дополнительные стили для страницы входа (скрытие боковой панели и ширина кнопок)
 st.markdown("""

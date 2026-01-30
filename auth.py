@@ -9,7 +9,7 @@ import os
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 import streamlit as st
-from utils import load_css
+from utils import load_css, load_all_styles
 
 # Получаем путь к директории, где находится этот файл
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -508,8 +508,8 @@ def render_sidebar_menu(current_page: str = "reports"):
     
     # CSS для скрытия стандартной навигации Streamlit и стилизации элементов
     # Этот CSS применяется глобально для всех страниц
-    # Загрузка CSS стилей из внешнего файла
-    load_css()
+    # Загрузка CSS стилей из внешнего файла (включая шрифты)
+    load_all_styles()
     
     with st.sidebar:
         # Меню навигации

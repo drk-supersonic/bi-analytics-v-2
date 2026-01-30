@@ -20,7 +20,7 @@ from auth import (
     verify_reset_token,
     get_user_by_username
 )
-from utils import load_css, load_css_custom
+from utils import load_css, load_css_custom, load_all_styles
 
 # Russian month names mapping
 RUSSIAN_MONTHS = {
@@ -128,8 +128,8 @@ st.set_page_config(
 # Дополнительная попытка скрыть через st.navigation (может быть недоступно в версии 1.52.1)
 # Удаляем этот вызов, так как он может вызывать ошибки
 
-# Загрузка CSS стилей из внешнего файла
-load_css()
+# Загрузка CSS стилей из внешнего файла (включая шрифты)
+load_all_styles()
 
 def detect_data_type(df, file_name=None):
     """Detect the type of data based on column structure and filename"""
