@@ -111,10 +111,15 @@ def load_all_styles():
     """
     Загружает все CSS файлы: сначала шрифты, затем основные стили
     """
+    # Загружаем Material Icons ПЕРВЫМ, чтобы они были доступны
+    st.markdown("""
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    """, unsafe_allow_html=True)
+    
     load_fonts()
     load_css()
     
-    # Стили для Material Icons (шрифт загружается через font_style.css)
+    # Стили для Material Icons
     st.markdown("""
         <style>
         span.material-icons {
@@ -146,10 +151,16 @@ def load_all_styles():
                         'keyboard_arrow_right', 'keyboard_arrow_left', 'keyboard_arrow_up', 'keyboard_arrow_down',
                         'arrow_right', 'arrow_left', 'arrow_up', 'arrow_down', 'arrow_forward', 'arrow_back'
                     ];
+                    var foundCount = 0;
                     
                     for (var i = 0; i < allSpans.length; i++) {
                         var span = allSpans[i];
                         var text = (span.textContent || span.innerText || '').trim();
+                        
+                        // Пропускаем уже обработанные элементы
+                        if (span.classList.contains('material-icons')) {
+                            continue;
+                        }
                         
                         var isIcon = false;
                         for (var j = 0; j < materialIconNames.length; j++) {
@@ -166,7 +177,13 @@ def load_all_styles():
                             span.style.fontFamily = "'Material Icons'";
                             span.style.fontSize = '24px';
                             span.style.lineHeight = '1';
+                            span.style.display = 'inline-block';
+                            foundCount++;
                         }
+                    }
+                    
+                    if (foundCount > 0) {
+                        console.log('Applied Material Icons to', foundCount, 'elements');
                     }
                 } catch(e) {
                     console.error('Error applying Material Icons:', e);
@@ -180,12 +197,26 @@ def load_all_styles():
                 setTimeout(applyMaterialIcons, 200);
                 setTimeout(applyMaterialIcons, 500);
                 setTimeout(applyMaterialIcons, 1000);
+                setTimeout(applyMaterialIcons, 2000);
+            }
+            
+            // Ждем загрузки Material Icons шрифта
+            function waitForFont() {
+                if (document.fonts && document.fonts.check) {
+                    if (document.fonts.check('24px Material Icons')) {
+                        runApplyIcons();
+                    } else {
+                        setTimeout(waitForFont, 100);
+                    }
+                } else {
+                    runApplyIcons();
+                }
             }
             
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', runApplyIcons);
+                document.addEventListener('DOMContentLoaded', waitForFont);
             } else {
-                runApplyIcons();
+                waitForFont();
             }
             
             if (typeof MutationObserver !== 'undefined') {
