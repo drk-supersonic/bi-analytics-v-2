@@ -35,16 +35,8 @@
 
 /* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */
 
-/* Скрытие боковой панели на странице входа */
-.stSidebar {
-    display: none !important;
-}
-
-[data-testid="stSidebar"] {
-    display: none !important;
-}
-
 /* Скрытие стандартной навигации Streamlit в боковой панели */
+/* (Используется кастомное меню через render_sidebar_menu) */
 [data-testid="stSidebarNav"],
 div[data-testid="stSidebarNav"],
 ul[data-testid="stSidebarNav"],

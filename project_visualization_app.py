@@ -6375,8 +6375,17 @@ def dashboard_forecast_budget(df):
 def main():
     # Проверка авторизации - если не авторизован, показываем форму входа
     if not check_authentication():
-        # Скрываем боковую панель на странице входа и ограничиваем ширину формы
-        # Дополнительные стили для страницы входа (уже включены в основной CSS)
+        # Скрываем боковую панель на странице входа
+        st.markdown("""
+            <style>
+            .stSidebar {
+                display: none !important;
+            }
+            [data-testid="stSidebar"] {
+                display: none !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
         
         # Заголовок страницы входа
         st.markdown("""

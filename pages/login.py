@@ -29,9 +29,17 @@ st.set_page_config(
 # Загрузка CSS стилей из внешнего файла
 load_css()
 
-# Дополнительные стили для страницы входа (ширина кнопок)
+# Дополнительные стили для страницы входа (скрытие боковой панели и ширина кнопок)
 st.markdown("""
     <style>
+    /* Скрытие боковой панели на странице входа */
+    .stSidebar {
+        display: none !important;
+    }
+    [data-testid="stSidebar"] {
+        display: none !important;
+    }
+    /* Ширина кнопок на странице входа */
     .stButton > button {
         width: 100%;
     }
