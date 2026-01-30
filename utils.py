@@ -88,17 +88,21 @@ def load_fonts(font_css_path: str = "static/css/font_style.css"):
                 return match.group(0)
         
         # Заменяем все пути к шрифтам на base64
-        font_content = re.sub(
-            r"url\('\.\./fonts/([^']+)'\)",
-            replace_font_path,
-            font_content
-        )
+        # Поддерживаем разные форматы: url('../fonts/...'), url("../fonts/..."), url(../fonts/...)
+        patterns = [
+            r"url\('\.\./fonts/([^']+)'\)",  # url('../fonts/...')
+            r'url\("\.\./fonts/([^"]+)"\)',   # url("../fonts/...")
+            r'url\(\.\./fonts/([^)]+)\)',     # url(../fonts/...)
+        ]
+        
+        for pattern in patterns:
+            font_content = re.sub(pattern, replace_font_path, font_content)
         
         # Применяем стили
         st.markdown(f"<style>{font_content}</style>", unsafe_allow_html=True)
     except Exception as e:
-        # Не показываем ошибку, если шрифты не загрузились (они опциональны)
-        pass
+        # Показываем ошибку для отладки
+        st.error(f"Ошибка при загрузке шрифтов: {e}")
 
 
 def load_all_styles():

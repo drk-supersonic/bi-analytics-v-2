@@ -39,7 +39,13 @@
 
 /* Применение основного шрифта ко всему приложению */
 * {
-    font-family: var(--mainFont);
+    font-family: var(--mainFont) !important;
+}
+
+/* Применение шрифта к элементам Streamlit */
+body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox, 
+.stTextInput, .stNumberInput, .stDateInput, .stCheckbox, .stMultiSelect {
+    font-family: var(--mainFont) !important;
 }
 
 /* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */
