@@ -48,6 +48,21 @@ body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox,
     font-family: var(--mainFont) !important;
 }
 
+/* Скрытие текстовых артефактов иконок (например, _arrow_right) */
+/* Используем JavaScript для скрытия элементов с текстом, начинающимся с _ */
+.stButton > button,
+.stSidebar button,
+.stSidebar .stButton > button {
+    font-family: var(--mainFont) !important;
+    position: relative;
+}
+
+/* Скрываем элементы, которые содержат только текст с подчеркиванием */
+.stButton > button::before,
+.stButton > button::after {
+    content: none !important;
+}
+
 /* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */
 
 /* Скрытие стандартной навигации Streamlit в боковой панели */

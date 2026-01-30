@@ -112,6 +112,41 @@ def load_all_styles():
     """
     load_fonts()
     load_css()
+    
+    # Скрываем текстовые артефакты иконок (например, _arrow_right)
+    st.markdown("""
+        <script>
+        // Скрываем элементы с текстом, который выглядит как имена иконок
+        function hideIconText() {
+            const buttons = document.querySelectorAll('.stButton > button, .stSidebar button');
+            buttons.forEach(button => {
+                const text = button.textContent || button.innerText;
+                // Если текст содержит только подчеркивание и буквы (имя иконки)
+                if (text && /^_[a-z_]+$/i.test(text.trim())) {
+                    button.style.display = 'none';
+                }
+                // Или если текст начинается с подчеркивания
+                if (text && text.trim().startsWith('_')) {
+                    const span = button.querySelector('span');
+                    if (span && span.textContent.trim().startsWith('_')) {
+                        span.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        // Выполняем сразу и после загрузки DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', hideIconText);
+        } else {
+            hideIconText();
+        }
+        
+        // Также выполняем после обновления Streamlit
+        setTimeout(hideIconText, 100);
+        setInterval(hideIconText, 1000);
+        </script>
+    """, unsafe_allow_html=True)
 
 
 def load_css_custom(css_content: str):
