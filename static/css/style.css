@@ -7,6 +7,10 @@
     
     /* Основной шрифт */
     --mainFont: 'Inter', sans-serif;
+    
+    /* Цвет фона графиков */
+    /* --graphBackgroundColor: #0e1117;      */
+    --graphBackgroundColor: hotpink;
 }
 
 /* 
@@ -266,5 +270,22 @@ textarea:focus {
     background-color: #2a2a3a !important;
     border: 1px solid #4a5568 !important;
     border-radius: 4px !important;
+}
+
+/* ==================== ГРАФИКИ PLOTLY ==================== */
+
+/* Применение цвета фона к графикам Plotly */
+.stPlotlyChart svg.main-svg,
+.stPlotlyChart .js-plotly-plot svg.main-svg,
+.plot-container svg.main-svg,
+svg.main-svg {
+    background: var(--graphBackgroundColor) !important;
+}
+
+/* Также применяем к контейнерам графиков */
+.stPlotlyChart,
+.stPlotlyChart .js-plotly-plot,
+.plot-container {
+    background: var(--graphBackgroundColor) !important;
 }
 
