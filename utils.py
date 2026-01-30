@@ -113,67 +113,69 @@ def load_all_styles():
     load_fonts()
     load_css()
     
-    # Скрываем текстовые артефакты Material Icons (например, keyboard_arrow_right)
+    # Загружаем Material Icons, чтобы они отображались правильно
     st.markdown("""
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <style>
+        /* Применяем Material Icons к span элементам с именами иконок */
+        span.material-icons,
+        span[class*="material-icons"],
+        span:not([class*="st"]) {
+            font-family: 'Material Icons' !important;
+            font-weight: normal !important;
+            font-style: normal !important;
+            font-size: 24px !important;
+            line-height: 1 !important;
+            letter-spacing: normal !important;
+            text-transform: none !important;
+            display: inline-block !important;
+            white-space: nowrap !important;
+            word-wrap: normal !important;
+            direction: ltr !important;
+            -webkit-font-smoothing: antialiased !important;
+            text-rendering: optimizeLegibility !important;
+        }
+        
+        /* Скрываем span элементы, которые содержат только имена Material Icons как текст */
+        span:not(.material-icons):not([class*="st"]) {
+            /* Проверяем через JavaScript */
+        }
+        </style>
         <script>
-        // Скрываем span элементы с именами Material Icons
-        function hideMaterialIcons() {
-            // Ищем ВСЕ span элементы и проверяем их содержимое
+        // Функция для применения Material Icons
+        function applyMaterialIcons() {
             const allSpans = document.querySelectorAll('span');
             allSpans.forEach(span => {
                 const text = (span.textContent || span.innerText || '').trim();
                 
-                // Список имен Material Icons, которые нужно скрыть
+                // Список имен Material Icons
                 const materialIconNames = [
-                    'keyboard_arrow_right',
-                    'keyboard_arrow_left',
-                    'keyboard_arrow_up',
-                    'keyboard_arrow_down',
-                    'arrow_right',
-                    'arrow_left',
-                    'arrow_up',
-                    'arrow_down',
-                    'arrow_forward',
-                    'arrow_back'
+                    'keyboard_arrow_right', 'keyboard_arrow_left', 'keyboard_arrow_up', 'keyboard_arrow_down',
+                    'arrow_right', 'arrow_left', 'arrow_up', 'arrow_down', 'arrow_forward', 'arrow_back'
                 ];
                 
-                // Если текст точно совпадает с именем Material Icon
+                // Если текст является именем Material Icon, применяем класс material-icons
                 if (materialIconNames.includes(text) || 
-                    text.includes('keyboard_arrow') || 
-                    text.includes('_arrow') ||
+                    (text.includes('keyboard_arrow') && text.length < 25) ||
                     (text.startsWith('arrow_') && text.length < 20)) {
-                    span.style.display = 'none !important';
-                    span.style.visibility = 'hidden !important';
-                    span.style.width = '0 !important';
-                    span.style.height = '0 !important';
-                    span.style.fontSize = '0 !important';
-                    span.style.lineHeight = '0 !important';
-                    span.style.opacity = '0 !important';
-                    span.style.position = 'absolute !important';
-                    span.style.left = '-9999px !important';
+                    span.classList.add('material-icons');
+                    span.style.fontFamily = "'Material Icons'";
+                    span.style.fontSize = '24px';
+                    span.style.lineHeight = '1';
                 }
             });
         }
         
-        // Выполняем сразу
-        hideMaterialIcons();
-        
-        // Выполняем после загрузки DOM
+        // Выполняем сразу и после загрузки
+        applyMaterialIcons();
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', hideMaterialIcons);
-        } else {
-            hideMaterialIcons();
+            document.addEventListener('DOMContentLoaded', applyMaterialIcons);
         }
+        setTimeout(applyMaterialIcons, 100);
+        setTimeout(applyMaterialIcons, 500);
         
-        // Также выполняем после обновления Streamlit (несколько раз с задержками)
-        setTimeout(hideMaterialIcons, 50);
-        setTimeout(hideMaterialIcons, 100);
-        setTimeout(hideMaterialIcons, 200);
-        setTimeout(hideMaterialIcons, 500);
-        setInterval(hideMaterialIcons, 300);
-        
-        // Используем MutationObserver для отслеживания изменений DOM
-        const observer = new MutationObserver(hideMaterialIcons);
+        // Используем MutationObserver
+        const observer = new MutationObserver(applyMaterialIcons);
         observer.observe(document.body, {
             childList: true,
             subtree: true,
