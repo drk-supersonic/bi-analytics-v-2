@@ -210,6 +210,53 @@ def load_all_styles():
                     });
                 }
             }
+            
+            // Применение цвета фона к графикам Plotly через CSS переменную
+            function applyGraphBackground() {
+                try {
+                    var graphBgColor = getComputedStyle(document.documentElement).getPropertyValue('--graphBackgroundColor').trim();
+                    if (graphBgColor) {
+                        var svgElements = document.querySelectorAll('svg.main-svg');
+                        for (var i = 0; i < svgElements.length; i++) {
+                            svgElements[i].style.setProperty('background', graphBgColor, 'important');
+                        }
+                    }
+                } catch(e) {
+                    console.error('Error applying graph background:', e);
+                }
+            }
+            
+            // Применяем сразу и при изменениях DOM
+            applyGraphBackground();
+            setTimeout(applyGraphBackground, 100);
+            setTimeout(applyGraphBackground, 500);
+            setTimeout(applyGraphBackground, 1000);
+            
+            if (typeof MutationObserver !== 'undefined') {
+                var graphObserver = new MutationObserver(function(mutations) {
+                    var hasNewSvg = false;
+                    for (var i = 0; i < mutations.length; i++) {
+                        if (mutations[i].addedNodes.length > 0) {
+                            for (var j = 0; j < mutations[i].addedNodes.length; j++) {
+                                var node = mutations[i].addedNodes[j];
+                                if (node.nodeType === 1 && (node.tagName === 'svg' || node.querySelector('svg.main-svg'))) {
+                                    hasNewSvg = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (hasNewSvg) {
+                        setTimeout(applyGraphBackground, 100);
+                    }
+                });
+                if (document.body) {
+                    graphObserver.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                }
+            }
         })();
         </script>
     """, height=0)
