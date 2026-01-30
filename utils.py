@@ -116,46 +116,87 @@ def load_all_styles():
     # Загружаем Material Icons для элементов со стрелочками
     st.markdown("""
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    """, unsafe_allow_html=True)
-    
-    # JavaScript для применения Material Icons
-    st.markdown("""
+        <style>
+        /* Применяем Material Icons к span элементам с именами иконок */
+        span.material-icons {
+            font-family: 'Material Icons' !important;
+            font-weight: normal !important;
+            font-style: normal !important;
+            font-size: 24px !important;
+            line-height: 1 !important;
+            letter-spacing: normal !important;
+            text-transform: none !important;
+            display: inline-block !important;
+            white-space: nowrap !important;
+            word-wrap: normal !important;
+            direction: ltr !important;
+            -webkit-font-smoothing: antialiased !important;
+            text-rendering: optimizeLegibility !important;
+        }
+        </style>
         <script>
         (function() {
             function applyMaterialIcons() {
-                const allSpans = document.querySelectorAll('span');
-                allSpans.forEach(function(span) {
-                    const text = (span.textContent || span.innerText || '').trim();
-                    
+                try {
+                    var allSpans = document.querySelectorAll('span');
                     var materialIconNames = [
                         'keyboard_arrow_right', 'keyboard_arrow_left', 'keyboard_arrow_up', 'keyboard_arrow_down',
                         'arrow_right', 'arrow_left', 'arrow_up', 'arrow_down', 'arrow_forward', 'arrow_back'
                     ];
                     
-                    if (materialIconNames.indexOf(text) !== -1 || 
-                        (text.indexOf('keyboard_arrow') !== -1 && text.length < 25) ||
-                        (text.indexOf('arrow_') === 0 && text.length < 20)) {
-                        span.classList.add('material-icons');
+                    for (var i = 0; i < allSpans.length; i++) {
+                        var span = allSpans[i];
+                        var text = (span.textContent || span.innerText || '').trim();
+                        
+                        // Проверяем, является ли текст именем Material Icon
+                        var isIcon = false;
+                        for (var j = 0; j < materialIconNames.length; j++) {
+                            if (text === materialIconNames[j]) {
+                                isIcon = true;
+                                break;
+                            }
+                        }
+                        
+                        if (isIcon || 
+                            (text.indexOf('keyboard_arrow') !== -1 && text.length < 25) ||
+                            (text.indexOf('arrow_') === 0 && text.length < 20)) {
+                            span.classList.add('material-icons');
+                            span.style.fontFamily = "'Material Icons'";
+                            span.style.fontSize = '24px';
+                            span.style.lineHeight = '1';
+                        }
                     }
-                });
+                } catch(e) {
+                    console.error('Error applying Material Icons:', e);
+                }
+            }
+            
+            // Выполняем несколько раз с задержками
+            function runApplyIcons() {
+                applyMaterialIcons();
+                setTimeout(applyMaterialIcons, 50);
+                setTimeout(applyMaterialIcons, 100);
+                setTimeout(applyMaterialIcons, 200);
+                setTimeout(applyMaterialIcons, 500);
+                setTimeout(applyMaterialIcons, 1000);
             }
             
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', applyMaterialIcons);
+                document.addEventListener('DOMContentLoaded', runApplyIcons);
             } else {
-                applyMaterialIcons();
+                runApplyIcons();
             }
             
-            setTimeout(applyMaterialIcons, 100);
-            setTimeout(applyMaterialIcons, 500);
-            
-            var observer = new MutationObserver(applyMaterialIcons);
-            if (document.body) {
-                observer.observe(document.body, {
-                    childList: true,
-                    subtree: true,
-                    characterData: true
-                });
+            // Используем MutationObserver для отслеживания изменений
+            if (typeof MutationObserver !== 'undefined') {
+                var observer = new MutationObserver(applyMaterialIcons);
+                if (document.body) {
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true,
+                        characterData: true
+                    });
+                }
             }
         })();
         </script>
