@@ -101,8 +101,9 @@ def load_fonts(font_css_path: str = "static/css/font_style.css"):
         # Применяем стили
         st.markdown(f"<style>{font_content}</style>", unsafe_allow_html=True)
     except Exception as e:
-        # Показываем ошибку для отладки
-        st.error(f"Ошибка при загрузке шрифтов: {e}")
+        # Не показываем ошибку пользователю (шрифты опциональны)
+        # Ошибки можно увидеть в логах сервера
+        pass
 
 
 def load_all_styles():
