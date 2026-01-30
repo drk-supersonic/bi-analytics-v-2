@@ -140,28 +140,23 @@ def load_all_styles():
         </style>
     """, unsafe_allow_html=True)
     
-    # JavaScript через components.html для правильного выполнения
+    # JavaScript для скрытия текстовых артефактов Material Icons
     components.html("""
         <script>
         (function() {
-            function applyMaterialIcons() {
+            function hideIconText() {
                 try {
                     var allSpans = document.querySelectorAll('span');
                     var materialIconNames = [
                         'keyboard_arrow_right', 'keyboard_arrow_left', 'keyboard_arrow_up', 'keyboard_arrow_down',
                         'arrow_right', 'arrow_left', 'arrow_up', 'arrow_down', 'arrow_forward', 'arrow_back'
                     ];
-                    var foundCount = 0;
                     
                     for (var i = 0; i < allSpans.length; i++) {
                         var span = allSpans[i];
                         var text = (span.textContent || span.innerText || '').trim();
                         
-                        // Пропускаем уже обработанные элементы
-                        if (span.classList.contains('material-icons')) {
-                            continue;
-                        }
-                        
+                        // Если текст является именем Material Icon, скрываем элемент
                         var isIcon = false;
                         for (var j = 0; j < materialIconNames.length; j++) {
                             if (text === materialIconNames[j]) {
@@ -173,54 +168,40 @@ def load_all_styles():
                         if (isIcon || 
                             (text.indexOf('keyboard_arrow') !== -1 && text.length < 25) ||
                             (text.indexOf('arrow_') === 0 && text.length < 20)) {
-                            span.classList.add('material-icons');
-                            span.style.fontFamily = "'Material Icons'";
-                            span.style.fontSize = '24px';
-                            span.style.lineHeight = '1';
-                            span.style.display = 'inline-block';
-                            foundCount++;
+                            // Скрываем элемент полностью
+                            span.style.display = 'none';
+                            span.style.visibility = 'hidden';
+                            span.style.width = '0';
+                            span.style.height = '0';
+                            span.style.fontSize = '0';
+                            span.style.lineHeight = '0';
+                            span.style.opacity = '0';
+                            span.style.position = 'absolute';
+                            span.style.left = '-9999px';
                         }
                     }
-                    
-                    if (foundCount > 0) {
-                        console.log('Applied Material Icons to', foundCount, 'elements');
-                    }
                 } catch(e) {
-                    console.error('Error applying Material Icons:', e);
+                    console.error('Error hiding icon text:', e);
                 }
             }
             
-            function runApplyIcons() {
-                applyMaterialIcons();
-                setTimeout(applyMaterialIcons, 50);
-                setTimeout(applyMaterialIcons, 100);
-                setTimeout(applyMaterialIcons, 200);
-                setTimeout(applyMaterialIcons, 500);
-                setTimeout(applyMaterialIcons, 1000);
-                setTimeout(applyMaterialIcons, 2000);
-            }
-            
-            // Ждем загрузки Material Icons шрифта
-            function waitForFont() {
-                if (document.fonts && document.fonts.check) {
-                    if (document.fonts.check('24px Material Icons')) {
-                        runApplyIcons();
-                    } else {
-                        setTimeout(waitForFont, 100);
-                    }
-                } else {
-                    runApplyIcons();
-                }
+            function runHideIcons() {
+                hideIconText();
+                setTimeout(hideIconText, 50);
+                setTimeout(hideIconText, 100);
+                setTimeout(hideIconText, 200);
+                setTimeout(hideIconText, 500);
+                setTimeout(hideIconText, 1000);
             }
             
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', waitForFont);
+                document.addEventListener('DOMContentLoaded', runHideIcons);
             } else {
-                waitForFont();
+                runHideIcons();
             }
             
             if (typeof MutationObserver !== 'undefined') {
-                var observer = new MutationObserver(applyMaterialIcons);
+                var observer = new MutationObserver(hideIconText);
                 if (document.body) {
                     observer.observe(document.body, {
                         childList: true,

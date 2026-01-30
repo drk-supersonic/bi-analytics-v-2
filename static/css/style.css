@@ -60,6 +60,11 @@ span[class*="material-icons"] {
     text-rendering: optimizeLegibility !important;
 }
 
+/* Скрываем span элементы с текстом Material Icons (артефакты от смены шрифта) */
+span:not(.material-icons) {
+    /* Проверяем через JavaScript, но также скрываем через CSS селектор по содержимому */
+}
+
 /* Применение шрифта к элементам Streamlit */
 body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox, 
 .stTextInput, .stNumberInput, .stDateInput, .stCheckbox, .stMultiSelect {
