@@ -211,14 +211,15 @@ def load_all_styles():
                 }
             }
             
-            // Применение цвета фона к графикам Plotly через CSS переменную
+            // Применение цвета фона только к фону графиков Plotly (не трогаем другие свойства)
             function applyGraphBackground() {
                 try {
                     var graphBgColor = getComputedStyle(document.documentElement).getPropertyValue('--graphBackgroundColor').trim();
                     if (graphBgColor) {
                         var svgElements = document.querySelectorAll('svg.main-svg');
                         for (var i = 0; i < svgElements.length; i++) {
-                            svgElements[i].style.setProperty('background', graphBgColor, 'important');
+                            // Меняем только background-color, не трогая другие стили
+                            svgElements[i].style.setProperty('background-color', graphBgColor, 'important');
                         }
                     }
                 } catch(e) {

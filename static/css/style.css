@@ -274,8 +274,8 @@ textarea:focus {
 
 /* ==================== ГРАФИКИ PLOTLY ==================== */
 
-/* Применение цвета фона только к SVG элементам графиков Plotly */
+/* Применение цвета фона только к фону графиков Plotly */
 svg.main-svg {
-    background: var(--graphBackgroundColor) !important;
+    background-color: var(--graphBackgroundColor) !important;
 }
 
