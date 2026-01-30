@@ -2,6 +2,7 @@
 Утилиты для работы с приложением
 """
 import streamlit as st
+import streamlit.components.v1 as components
 import os
 
 
@@ -117,7 +118,6 @@ def load_all_styles():
     st.markdown("""
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
-        /* Применяем Material Icons к span элементам с именами иконок */
         span.material-icons {
             font-family: 'Material Icons' !important;
             font-weight: normal !important;
@@ -134,6 +134,10 @@ def load_all_styles():
             text-rendering: optimizeLegibility !important;
         }
         </style>
+    """, unsafe_allow_html=True)
+    
+    # JavaScript через components.html для правильного выполнения
+    components.html("""
         <script>
         (function() {
             function applyMaterialIcons() {
@@ -148,7 +152,6 @@ def load_all_styles():
                         var span = allSpans[i];
                         var text = (span.textContent || span.innerText || '').trim();
                         
-                        // Проверяем, является ли текст именем Material Icon
                         var isIcon = false;
                         for (var j = 0; j < materialIconNames.length; j++) {
                             if (text === materialIconNames[j]) {
@@ -171,7 +174,6 @@ def load_all_styles():
                 }
             }
             
-            // Выполняем несколько раз с задержками
             function runApplyIcons() {
                 applyMaterialIcons();
                 setTimeout(applyMaterialIcons, 50);
@@ -187,7 +189,6 @@ def load_all_styles():
                 runApplyIcons();
             }
             
-            // Используем MutationObserver для отслеживания изменений
             if (typeof MutationObserver !== 'undefined') {
                 var observer = new MutationObserver(applyMaterialIcons);
                 if (document.body) {
@@ -200,7 +201,7 @@ def load_all_styles():
             }
         })();
         </script>
-    """, unsafe_allow_html=True)
+    """, height=0)
 
 
 def load_css_custom(css_content: str):
