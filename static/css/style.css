@@ -48,19 +48,24 @@ body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox,
     font-family: var(--mainFont) !important;
 }
 
-/* Скрытие текстовых артефактов иконок (например, _arrow_right) */
-/* Используем JavaScript для скрытия элементов с текстом, начинающимся с _ */
-.stButton > button,
-.stSidebar button,
-.stSidebar .stButton > button {
-    font-family: var(--mainFont) !important;
-    position: relative;
+/* Скрытие текстовых артефактов Material Icons */
+span[class*="material-icons"],
+span.material-icons,
+span[class*="keyboard_arrow"],
+span[class*="arrow_right"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
 }
 
-/* Скрываем элементы, которые содержат только текст с подчеркиванием */
-.stButton > button::before,
-.stButton > button::after {
-    content: none !important;
+/* Скрываем span элементы с текстом Material Icons */
+.stButton > button span,
+.stSidebar button span,
+.stSidebar .stButton > button span {
+    font-family: var(--mainFont) !important;
 }
 
 /* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */

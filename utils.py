@@ -113,38 +113,53 @@ def load_all_styles():
     load_fonts()
     load_css()
     
-    # Скрываем текстовые артефакты иконок (например, _arrow_right)
+    # Скрываем текстовые артефакты Material Icons (например, keyboard_arrow_right)
     st.markdown("""
         <script>
-        // Скрываем элементы с текстом, который выглядит как имена иконок
-        function hideIconText() {
-            const buttons = document.querySelectorAll('.stButton > button, .stSidebar button');
-            buttons.forEach(button => {
-                const text = button.textContent || button.innerText;
-                // Если текст содержит только подчеркивание и буквы (имя иконки)
-                if (text && /^_[a-z_]+$/i.test(text.trim())) {
-                    button.style.display = 'none';
+        // Скрываем span элементы с именами Material Icons
+        function hideMaterialIcons() {
+            // Ищем все span элементы, которые содержат имена Material Icons
+            const iconSpans = document.querySelectorAll('span[class*="material-icons"], span.material-icons, span[class*="keyboard_arrow"], span[class*="arrow_right"]');
+            iconSpans.forEach(span => {
+                const text = span.textContent || span.innerText;
+                // Если текст содержит имя Material Icon (например, keyboard_arrow_right)
+                if (text && (text.includes('keyboard_arrow') || text.includes('arrow_right') || text.includes('_arrow'))) {
+                    span.style.display = 'none';
+                    span.style.visibility = 'hidden';
+                    span.style.width = '0';
+                    span.style.height = '0';
+                    span.style.fontSize = '0';
+                    span.style.lineHeight = '0';
                 }
-                // Или если текст начинается с подчеркивания
-                if (text && text.trim().startsWith('_')) {
-                    const span = button.querySelector('span');
-                    if (span && span.textContent.trim().startsWith('_')) {
-                        span.style.display = 'none';
-                    }
+            });
+            
+            // Также ищем span элементы с текстом, который является именем Material Icon
+            const allSpans = document.querySelectorAll('span');
+            allSpans.forEach(span => {
+                const text = span.textContent || span.innerText;
+                if (text && (text.trim() === 'keyboard_arrow_right' || 
+                             text.trim().includes('keyboard_arrow') ||
+                             text.trim().includes('arrow_right'))) {
+                    span.style.display = 'none';
+                    span.style.visibility = 'hidden';
+                    span.style.width = '0';
+                    span.style.height = '0';
+                    span.style.fontSize = '0';
+                    span.style.lineHeight = '0';
                 }
             });
         }
         
         // Выполняем сразу и после загрузки DOM
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', hideIconText);
+            document.addEventListener('DOMContentLoaded', hideMaterialIcons);
         } else {
-            hideIconText();
+            hideMaterialIcons();
         }
         
         // Также выполняем после обновления Streamlit
-        setTimeout(hideIconText, 100);
-        setInterval(hideIconText, 1000);
+        setTimeout(hideMaterialIcons, 100);
+        setInterval(hideMaterialIcons, 500);
         </script>
     """, unsafe_allow_html=True)
 
