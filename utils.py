@@ -118,48 +118,67 @@ def load_all_styles():
         <script>
         // Скрываем span элементы с именами Material Icons
         function hideMaterialIcons() {
-            // Ищем все span элементы, которые содержат имена Material Icons
-            const iconSpans = document.querySelectorAll('span[class*="material-icons"], span.material-icons, span[class*="keyboard_arrow"], span[class*="arrow_right"]');
-            iconSpans.forEach(span => {
-                const text = span.textContent || span.innerText;
-                // Если текст содержит имя Material Icon (например, keyboard_arrow_right)
-                if (text && (text.includes('keyboard_arrow') || text.includes('arrow_right') || text.includes('_arrow'))) {
-                    span.style.display = 'none';
-                    span.style.visibility = 'hidden';
-                    span.style.width = '0';
-                    span.style.height = '0';
-                    span.style.fontSize = '0';
-                    span.style.lineHeight = '0';
-                }
-            });
-            
-            // Также ищем span элементы с текстом, который является именем Material Icon
+            // Ищем ВСЕ span элементы и проверяем их содержимое
             const allSpans = document.querySelectorAll('span');
             allSpans.forEach(span => {
-                const text = span.textContent || span.innerText;
-                if (text && (text.trim() === 'keyboard_arrow_right' || 
-                             text.trim().includes('keyboard_arrow') ||
-                             text.trim().includes('arrow_right'))) {
-                    span.style.display = 'none';
-                    span.style.visibility = 'hidden';
-                    span.style.width = '0';
-                    span.style.height = '0';
-                    span.style.fontSize = '0';
-                    span.style.lineHeight = '0';
+                const text = (span.textContent || span.innerText || '').trim();
+                
+                // Список имен Material Icons, которые нужно скрыть
+                const materialIconNames = [
+                    'keyboard_arrow_right',
+                    'keyboard_arrow_left',
+                    'keyboard_arrow_up',
+                    'keyboard_arrow_down',
+                    'arrow_right',
+                    'arrow_left',
+                    'arrow_up',
+                    'arrow_down',
+                    'arrow_forward',
+                    'arrow_back'
+                ];
+                
+                // Если текст точно совпадает с именем Material Icon
+                if (materialIconNames.includes(text) || 
+                    text.includes('keyboard_arrow') || 
+                    text.includes('_arrow') ||
+                    (text.startsWith('arrow_') && text.length < 20)) {
+                    span.style.display = 'none !important';
+                    span.style.visibility = 'hidden !important';
+                    span.style.width = '0 !important';
+                    span.style.height = '0 !important';
+                    span.style.fontSize = '0 !important';
+                    span.style.lineHeight = '0 !important';
+                    span.style.opacity = '0 !important';
+                    span.style.position = 'absolute !important';
+                    span.style.left = '-9999px !important';
                 }
             });
         }
         
-        // Выполняем сразу и после загрузки DOM
+        // Выполняем сразу
+        hideMaterialIcons();
+        
+        // Выполняем после загрузки DOM
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', hideMaterialIcons);
         } else {
             hideMaterialIcons();
         }
         
-        // Также выполняем после обновления Streamlit
+        // Также выполняем после обновления Streamlit (несколько раз с задержками)
+        setTimeout(hideMaterialIcons, 50);
         setTimeout(hideMaterialIcons, 100);
-        setInterval(hideMaterialIcons, 500);
+        setTimeout(hideMaterialIcons, 200);
+        setTimeout(hideMaterialIcons, 500);
+        setInterval(hideMaterialIcons, 300);
+        
+        // Используем MutationObserver для отслеживания изменений DOM
+        const observer = new MutationObserver(hideMaterialIcons);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
         </script>
     """, unsafe_allow_html=True)
 

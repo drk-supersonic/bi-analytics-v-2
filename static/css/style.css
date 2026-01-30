@@ -49,16 +49,23 @@ body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox,
 }
 
 /* Скрытие текстовых артефактов Material Icons */
+/* Скрываем все span элементы, которые могут содержать имена Material Icons */
 span[class*="material-icons"],
-span.material-icons,
-span[class*="keyboard_arrow"],
-span[class*="arrow_right"] {
+span.material-icons {
     display: none !important;
     visibility: hidden !important;
     width: 0 !important;
     height: 0 !important;
     font-size: 0 !important;
     line-height: 0 !important;
+    opacity: 0 !important;
+}
+
+/* Дополнительное правило для скрытия через атрибут data-icon */
+span[data-icon],
+span[aria-label*="arrow"] {
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /* Скрываем span элементы с текстом Material Icons */
