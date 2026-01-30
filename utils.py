@@ -113,65 +113,41 @@ def load_all_styles():
     load_fonts()
     load_css()
     
-    # Заменяем текстовые иконки Material Icons на SVG
+    # Загружаем Material Icons для элементов со стрелочками
     st.markdown("""
-        <style>
-        /* SVG иконка стрелки вправо */
-        .arrow-right-svg {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            vertical-align: middle;
-            fill: currentColor;
-        }
-        </style>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script>
-        // SVG иконка стрелки вправо
-        const arrowRightSVG = '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>';
-        
-        // Функция для замены текстовых иконок на SVG
-        function replaceIconsWithSVG() {
+        // Применяем Material Icons к span элементам с именами иконок
+        function applyMaterialIcons() {
             const allSpans = document.querySelectorAll('span');
             allSpans.forEach(span => {
                 const text = (span.textContent || span.innerText || '').trim();
                 
-                // Список имен Material Icons для замены
-                const iconMap = {
-                    'keyboard_arrow_right': arrowRightSVG,
-                    'arrow_right': arrowRightSVG,
-                    'keyboard_arrow_left': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>',
-                    'arrow_left': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>',
-                    'keyboard_arrow_up': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>',
-                    'arrow_up': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>',
-                    'keyboard_arrow_down': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>',
-                    'arrow_down': '<svg class="arrow-right-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>'
-                };
+                // Список имен Material Icons
+                const materialIconNames = [
+                    'keyboard_arrow_right', 'keyboard_arrow_left', 'keyboard_arrow_up', 'keyboard_arrow_down',
+                    'arrow_right', 'arrow_left', 'arrow_up', 'arrow_down', 'arrow_forward', 'arrow_back'
+                ];
                 
-                // Если текст является именем иконки, заменяем на SVG
-                if (iconMap[text]) {
-                    span.innerHTML = iconMap[text];
-                    span.style.display = 'inline-block';
-                    span.style.verticalAlign = 'middle';
-                } else if (text.includes('keyboard_arrow_right') || text.includes('arrow_right')) {
-                    span.innerHTML = arrowRightSVG;
-                    span.style.display = 'inline-block';
-                    span.style.verticalAlign = 'middle';
+                // Если текст является именем Material Icon, применяем класс material-icons
+                if (materialIconNames.includes(text) || 
+                    (text.includes('keyboard_arrow') && text.length < 25) ||
+                    (text.startsWith('arrow_') && text.length < 20)) {
+                    span.classList.add('material-icons');
                 }
             });
         }
         
         // Выполняем сразу и после загрузки
-        replaceIconsWithSVG();
+        applyMaterialIcons();
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', replaceIconsWithSVG);
+            document.addEventListener('DOMContentLoaded', applyMaterialIcons);
         }
-        setTimeout(replaceIconsWithSVG, 50);
-        setTimeout(replaceIconsWithSVG, 100);
-        setTimeout(replaceIconsWithSVG, 200);
-        setTimeout(replaceIconsWithSVG, 500);
+        setTimeout(applyMaterialIcons, 100);
+        setTimeout(applyMaterialIcons, 500);
         
-        // Используем MutationObserver для отслеживания изменений
-        const observer = new MutationObserver(replaceIconsWithSVG);
+        // Используем MutationObserver
+        const observer = new MutationObserver(applyMaterialIcons);
         observer.observe(document.body, {
             childList: true,
             subtree: true,
