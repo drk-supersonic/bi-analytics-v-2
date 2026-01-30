@@ -9,6 +9,7 @@ import os
 from datetime import datetime, timedelta
 from typing import Optional, Tuple
 import streamlit as st
+from utils import load_css
 
 # Получаем путь к директории, где находится этот файл
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -507,137 +508,8 @@ def render_sidebar_menu(current_page: str = "reports"):
     
     # CSS для скрытия стандартной навигации Streamlit и стилизации элементов
     # Этот CSS применяется глобально для всех страниц
-    st.markdown("""
-        <style>
-        /* Скрываем стандартную навигацию Streamlit в боковой панели */
-        [data-testid="stSidebarNav"],
-        div[data-testid="stSidebarNav"],
-        ul[data-testid="stSidebarNav"],
-        nav[data-testid="stSidebarNav"],
-        .stSidebar [data-testid="stSidebarNav"],
-        section[data-testid="stSidebarNav"] {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-            overflow: hidden !important;
-        }
-        /* Скрываем стандартные ссылки на страницы в боковой панели */
-        .stSidebar a[href*="pages/"],
-        .stSidebar a[href*="project_visualization_app"] {
-            display: none !important;
-        }
-        
-        /* Стилизация полей ввода - подсветка для видимости на темном фоне */
-        .stTextInput > div > div > input,
-        .stTextInput > div > div > input:focus,
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        input[type="number"],
-        textarea {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-            border-radius: 4px !important;
-            padding: 0.5rem !important;
-        }
-        .stTextInput > div > div > input:focus,
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        input[type="email"]:focus,
-        input[type="number"]:focus,
-        textarea:focus {
-            border-color: #1f77b4 !important;
-            box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-            outline: none !important;
-        }
-        
-        /* Стилизация кнопок - темные с окантовкой, белый текст */
-        .stButton > button {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-            border-radius: 4px !important;
-            padding: 0.5rem 1rem !important;
-            font-weight: 500 !important;
-            transition: all 0.2s ease !important;
-        }
-        .stButton > button:hover {
-            background-color: #3a3a4a !important;
-            border-color: #5a5a6a !important;
-            color: #ffffff !important;
-        }
-        .stButton > button:focus {
-            border-color: #1f77b4 !important;
-            box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-            outline: none !important;
-        }
-        /* Кнопки primary - темные с более яркой окантовкой */
-        .stButton > button[kind="primary"] {
-            background-color: #1a1a2a !important;
-            color: #ffffff !important;
-            border: 1px solid #1f77b4 !important;
-        }
-        .stButton > button[kind="primary"]:hover {
-            background-color: #2a2a3a !important;
-            border-color: #2a8bc4 !important;
-            color: #ffffff !important;
-        }
-        /* Отключенные кнопки */
-        .stButton > button:disabled {
-            background-color: #1a1a2a !important;
-            color: #666666 !important;
-            border-color: #333333 !important;
-            opacity: 0.6 !important;
-        }
-        /* Стилизация selectbox */
-        .stSelectbox > div > div > select {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-            border-radius: 4px !important;
-        }
-        .stSelectbox > div > div > select:focus {
-            border-color: #1f77b4 !important;
-            box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-            outline: none !important;
-        }
-        /* Стилизация checkbox */
-        .stCheckbox > label {
-            color: #ffffff !important;
-        }
-        /* Стилизация date input */
-        .stDateInput > div > div > input {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-        }
-        /* Стилизация number input */
-        .stNumberInput > div > div > input {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-            border-radius: 4px !important;
-        }
-        .stNumberInput > div > div > input:focus {
-            border-color: #1f77b4 !important;
-            box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-            outline: none !important;
-        }
-        /* Стилизация multiselect */
-        .stMultiSelect > div > div {
-            background-color: #2a2a3a !important;
-            color: #ffffff !important;
-            border: 1px solid #4a5568 !important;
-        }
-        /* Стилизация file uploader */
-        .stFileUploader > div {
-            background-color: #2a2a3a !important;
-            border: 1px solid #4a5568 !important;
-            border-radius: 4px !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    # Загрузка CSS стилей из внешнего файла
+    load_css()
     
     with st.sidebar:
         # Меню навигации

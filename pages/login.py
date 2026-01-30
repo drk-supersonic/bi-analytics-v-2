@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import streamlit as st
 from auth import authenticate, generate_reset_token, reset_password, verify_reset_token, init_db, get_user_by_username
+from utils import load_css
 
 # Инициализация базы данных
 init_db()
@@ -25,85 +26,14 @@ st.set_page_config(
     }
 )
 
-# Стили для темной темы
+# Загрузка CSS стилей из внешнего файла
+load_css()
+
+# Дополнительные стили для страницы входа (ширина кнопок)
 st.markdown("""
     <style>
-    /* Скрываем боковую панель на странице входа */
-    .stSidebar {
-        display: none !important;
-    }
-    [data-testid="stSidebar"] {
-        display: none !important;
-    }
-    /* Скрываем стандартную навигацию */
-    [data-testid="stSidebarNav"] {
-        display: none !important;
-    }
-    
-    
-    /* Стилизация полей ввода - подсветка для видимости на темном фоне */
-    .stTextInput > div > div > input,
-    .stTextInput > div > div > input:focus,
-    input[type="text"],
-    input[type="password"],
-    input[type="email"] {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-        padding: 0.5rem !important;
-    }
-    .stTextInput > div > div > input:focus,
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    input[type="email"]:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    
-    /* Стилизация кнопок - темные с окантовкой, белый текст */
     .stButton > button {
         width: 100%;
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-        padding: 0.5rem 1rem !important;
-        font-weight: 500 !important;
-        transition: all 0.2s ease !important;
-    }
-    .stButton > button:hover {
-        background-color: #3a3a4a !important;
-        border-color: #5a5a6a !important;
-        color: #ffffff !important;
-    }
-    .stButton > button:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    /* Кнопки primary - темные с более яркой окантовкой */
-    .stButton > button[kind="primary"] {
-        background-color: #1a1a2a !important;
-        color: #ffffff !important;
-        border: 1px solid #1f77b4 !important;
-    }
-    .stButton > button[kind="primary"]:hover {
-        background-color: #2a2a3a !important;
-        border-color: #2a8bc4 !important;
-        color: #ffffff !important;
-    }
-    /* Кнопки secondary */
-    .stButton > button[kind="secondary"] {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-    }
-    .stButton > button[kind="secondary"]:hover {
-        background-color: #3a3a4a !important;
-        border-color: #5a5a6a !important;
-        color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)

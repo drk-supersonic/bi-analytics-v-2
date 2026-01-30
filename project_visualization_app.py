@@ -20,6 +20,7 @@ from auth import (
     verify_reset_token,
     get_user_by_username
 )
+from utils import load_css, load_css_custom
 
 # Russian month names mapping
 RUSSIAN_MONTHS = {
@@ -127,137 +128,8 @@ st.set_page_config(
 # Дополнительная попытка скрыть через st.navigation (может быть недоступно в версии 1.52.1)
 # Удаляем этот вызов, так как он может вызывать ошибки
 
-# Custom CSS for better styling (dark theme)
-st.markdown("""
-    <style>
-    .main-header {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #1f77b4;
-        margin-bottom: 1rem;
-    }
-    .metric-card {
-        background-color: #262730;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin: 0.5rem 0;
-    }
-    /* Force dark theme */
-    .stApp {
-        background-color: #0e1117;
-    }
-    
-    /* Стилизация полей ввода - подсветка для видимости на темном фоне */
-    .stTextInput > div > div > input,
-    .stTextInput > div > div > input:focus,
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"],
-    textarea {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-        padding: 0.5rem !important;
-    }
-    .stTextInput > div > div > input:focus,
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    input[type="email"]:focus,
-    input[type="number"]:focus,
-    textarea:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    
-    /* Стилизация кнопок - темные с окантовкой, белый текст */
-    .stButton > button {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-        padding: 0.5rem 1rem !important;
-        font-weight: 500 !important;
-        transition: all 0.2s ease !important;
-    }
-    .stButton > button:hover {
-        background-color: #3a3a4a !important;
-        border-color: #5a5a6a !important;
-        color: #ffffff !important;
-    }
-    .stButton > button:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    /* Кнопки primary - темные с более яркой окантовкой */
-    .stButton > button[kind="primary"] {
-        background-color: #1a1a2a !important;
-        color: #ffffff !important;
-        border: 1px solid #1f77b4 !important;
-    }
-    .stButton > button[kind="primary"]:hover {
-        background-color: #2a2a3a !important;
-        border-color: #2a8bc4 !important;
-        color: #ffffff !important;
-    }
-    /* Отключенные кнопки */
-    .stButton > button:disabled {
-        background-color: #1a1a2a !important;
-        color: #666666 !important;
-        border-color: #333333 !important;
-        opacity: 0.6 !important;
-    }
-    /* Стилизация selectbox */
-    .stSelectbox > div > div > select {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-    }
-    .stSelectbox > div > div > select:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    /* Стилизация checkbox */
-    .stCheckbox > label {
-        color: #ffffff !important;
-    }
-    /* Стилизация date input */
-    .stDateInput > div > div > input {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-    }
-    /* Стилизация number input */
-    .stNumberInput > div > div > input {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-    }
-    .stNumberInput > div > div > input:focus {
-        border-color: #1f77b4 !important;
-        box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
-        outline: none !important;
-    }
-    /* Стилизация multiselect */
-    .stMultiSelect > div > div {
-        background-color: #2a2a3a !important;
-        color: #ffffff !important;
-        border: 1px solid #4a5568 !important;
-    }
-    /* Стилизация file uploader */
-    .stFileUploader > div {
-        background-color: #2a2a3a !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 4px !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# Загрузка CSS стилей из внешнего файла
+load_css()
 
 def detect_data_type(df, file_name=None):
     """Detect the type of data based on column structure and filename"""
@@ -6504,29 +6376,7 @@ def main():
     # Проверка авторизации - если не авторизован, показываем форму входа
     if not check_authentication():
         # Скрываем боковую панель на странице входа и ограничиваем ширину формы
-        st.markdown("""
-            <style>
-            .stSidebar {
-                display: none !important;
-            }
-            [data-testid="stSidebar"] {
-                display: none !important;
-            }
-            /* Ограничиваем ширину формы входа и expander */
-            .stForm {
-                max-width: 100% !important;
-                margin: 0 auto !important;
-            }
-            form[data-testid="stForm"] {
-                max-width: 100% !important;
-                margin: 0 auto !important;
-            }
-            /* Убеждаемся, что expander имеет такую же ширину */
-            .stExpander {
-                max-width: 100% !important;
-            }
-            </style>
-        """, unsafe_allow_html=True)
+        # Дополнительные стили для страницы входа (уже включены в основной CSS)
         
         # Заголовок страницы входа
         st.markdown("""

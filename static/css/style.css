@@ -1,0 +1,230 @@
+/* ==================== CSS ПЕРЕМЕННЫЕ ==================== */
+
+:root {
+    /* Цвета фона темы */
+    --themeBackgroundColor: white;  
+    /* --themeBackgroundColor: #0e1117;      */
+}
+
+/* 
+Применяется последнее значение --themeBackgroundColor (#0e1117 - темная тема)
+Чтобы использовать светлую тему, закомментируйте строку 6 и раскомментируйте строку 5
+*/
+
+/* ==================== ОСНОВНЫЕ СТИЛИ ==================== */
+
+/* Заголовки */
+.main-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1f77b4;
+    margin-bottom: 1rem;
+}
+
+.metric-card {
+    background-color: #262730;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+/* Принудительная темная тема - использует CSS переменную */
+.stApp {
+    background-color: var(--themeBackgroundColor);
+}
+
+/* ==================== СКРЫТИЕ ЭЛЕМЕНТОВ ==================== */
+
+/* Скрытие боковой панели на странице входа */
+.stSidebar {
+    display: none !important;
+}
+
+[data-testid="stSidebar"] {
+    display: none !important;
+}
+
+/* Скрытие стандартной навигации Streamlit в боковой панели */
+[data-testid="stSidebarNav"],
+div[data-testid="stSidebarNav"],
+ul[data-testid="stSidebarNav"],
+nav[data-testid="stSidebarNav"],
+.stSidebar [data-testid="stSidebarNav"],
+section[data-testid="stSidebarNav"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Скрытие стандартных ссылок на страницы в боковой панели */
+.stSidebar a[href*="pages/"],
+.stSidebar a[href*="project_visualization_app"] {
+    display: none !important;
+}
+
+/* ==================== ФОРМЫ ==================== */
+
+/* Ограничиваем ширину формы входа и expander */
+.stForm {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+}
+
+form[data-testid="stForm"] {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+}
+
+/* Убеждаемся, что expander имеет такую же ширину */
+.stExpander {
+    max-width: 100% !important;
+}
+
+/* ==================== ПОЛЯ ВВОДА ==================== */
+
+/* Стилизация полей ввода - подсветка для видимости на темном фоне */
+.stTextInput > div > div > input,
+.stTextInput > div > div > input:focus,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+    padding: 0.5rem !important;
+}
+
+.stTextInput > div > div > input:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #1f77b4 !important;
+    box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
+    outline: none !important;
+}
+
+/* ==================== КНОПКИ ==================== */
+
+/* Стилизация кнопок - темные с окантовкой, белый текст */
+.stButton > button {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+    background-color: #3a3a4a !important;
+    border-color: #5a5a6a !important;
+    color: #ffffff !important;
+}
+
+.stButton > button:focus {
+    border-color: #1f77b4 !important;
+    box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
+    outline: none !important;
+}
+
+/* Кнопки primary - темные с более яркой окантовкой */
+.stButton > button[kind="primary"] {
+    background-color: #1a1a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #1f77b4 !important;
+}
+
+.stButton > button[kind="primary"]:hover {
+    background-color: #2a2a3a !important;
+    border-color: #2a8bc4 !important;
+    color: #ffffff !important;
+}
+
+/* Кнопки secondary */
+.stButton > button[kind="secondary"] {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    background-color: #3a3a4a !important;
+    border-color: #5a5a6a !important;
+    color: #ffffff !important;
+}
+
+/* Отключенные кнопки */
+.stButton > button:disabled {
+    background-color: #1a1a2a !important;
+    color: #666666 !important;
+    border-color: #333333 !important;
+    opacity: 0.6 !important;
+}
+
+/* ==================== SELECTBOX ==================== */
+
+.stSelectbox > div > div > select {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+}
+
+.stSelectbox > div > div > select:focus {
+    border-color: #1f77b4 !important;
+    box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
+    outline: none !important;
+}
+
+/* ==================== CHECKBOX ==================== */
+
+.stCheckbox > label {
+    color: #ffffff !important;
+}
+
+/* ==================== DATE INPUT ==================== */
+
+.stDateInput > div > div > input {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+}
+
+/* ==================== NUMBER INPUT ==================== */
+
+.stNumberInput > div > div > input {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+}
+
+.stNumberInput > div > div > input:focus {
+    border-color: #1f77b4 !important;
+    box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
+    outline: none !important;
+}
+
+/* ==================== MULTISELECT ==================== */
+
+.stMultiSelect > div > div {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+}
+
+/* ==================== FILE UPLOADER ==================== */
+
+.stFileUploader > div {
+    background-color: #2a2a3a !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+}
+

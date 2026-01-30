@@ -42,6 +42,10 @@ Thumbs.db
 # Streamlit
 .streamlit/
 
+# Development scripts (не нужны на сервере)
+deploy.sh
+QUICK_DEPLOY.md
+
 
 
 
