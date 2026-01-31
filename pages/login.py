@@ -256,7 +256,7 @@ else:
             st.session_state.reset_mode = True
             st.rerun()
 
-    st.markdown("---")
+    # st.markdown("---")
 
     # Информация о демо-доступе
     with st.expander("ℹ️ Демо-доступ", expanded=False):
