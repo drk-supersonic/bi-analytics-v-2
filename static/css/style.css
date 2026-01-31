@@ -136,7 +136,7 @@ section[data-testid="stSidebarNav"] {
 /* ==================== ФОРМЫ ==================== */
 
 /* Ограничиваем ширину формы входа и expander */
-.stForm {
+/* .stForm {
     max-width: 100% !important;
     margin: 0 auto !important;
 }
@@ -144,12 +144,12 @@ section[data-testid="stSidebarNav"] {
 form[data-testid="stForm"] {
     max-width: 100% !important;
     margin: 0 auto !important;
-}
+} */
 
 /* Убеждаемся, что expander имеет такую же ширину */
-.stExpander {
+/* .stExpander {
     max-width: 100% !important;
-}
+} */
 
 /* ==================== ПОЛЯ ВВОДА ==================== */
 
