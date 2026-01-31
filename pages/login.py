@@ -43,6 +43,21 @@ st.markdown("""
     .stButton > button {
         width: 100%;
     }
+
+    /* Вертикальное расположение кнопок в форме */
+    [data-testid="stForm"] [data-testid="stHorizontalBlock"] {
+        flex-direction: column !important;
+    }
+
+    [data-testid="stForm"] .stColumn {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Отступ между кнопками */
+    [data-testid="stForm"] .stFormSubmitButton {
+        margin-bottom: 10px;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -256,7 +271,7 @@ else:
             st.session_state.reset_mode = True
             st.rerun()
 
-    # st.markdown("---")
+    st.markdown("---")
 
     # Информация о демо-доступе
     with st.expander("ℹ️ Демо-доступ", expanded=False):
