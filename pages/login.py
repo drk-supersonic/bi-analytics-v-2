@@ -73,10 +73,10 @@ st.markdown("""
 # Режим восстановления пароля по токену
 if st.session_state.reset_mode and st.session_state.reset_token:
     st.subheader("Восстановление пароля")
-    
+
     token = st.session_state.reset_token
     username = verify_reset_token(token)
-    
+
     if not username:
         st.error("⚠️ Токен восстановления недействителен или истек")
         st.session_state.reset_mode = False
@@ -84,14 +84,14 @@ if st.session_state.reset_mode and st.session_state.reset_token:
         if st.button("Вернуться к входу"):
             st.rerun()
         st.stop()
-    
+
     st.info(f"Восстановление пароля для пользователя: **{username}**")
-    
+
     new_password = st.text_input("Новый пароль", type="password", key="new_password")
     confirm_password = st.text_input("Подтвердите пароль", type="password", key="confirm_password")
-    
+
     col1, col2 = st.columns(2)
-    
+
     with col1:
         if st.button("Сбросить пароль", type="primary"):
             if not new_password or len(new_password) < 6:
@@ -108,7 +108,7 @@ if st.session_state.reset_mode and st.session_state.reset_token:
                         st.rerun()
                 else:
                     st.error("Ошибка при сбросе пароля")
-    
+
     with col2:
         if st.button("Отмена"):
             st.session_state.reset_mode = False
@@ -118,14 +118,14 @@ if st.session_state.reset_mode and st.session_state.reset_token:
 # Режим запроса восстановления пароля
 elif st.session_state.reset_mode:
     st.subheader("Восстановление пароля")
-    
+
     tab1, tab2 = st.tabs(["По имени пользователя", "По токену"])
-    
+
     with tab1:
         username = st.text_input("Введите имя пользователя", key="reset_username")
-        
+
         col1, col2 = st.columns(2)
-        
+
         with col1:
             if st.button("Создать токен восстановления", type="primary"):
                 if username:
@@ -139,7 +139,7 @@ elif st.session_state.reset_mode:
                             st.info(f"**Токен восстановления:** `{token}`")
                             st.warning("⚠️ В реальном приложении токен будет отправлен на email пользователя")
                             st.info("Для демонстрации скопируйте токен и используйте вкладку 'По токену'")
-                            
+
                             # Сохраняем токен в сессии для перехода к следующему шагу
                             st.session_state.reset_token = token
                             st.rerun()
@@ -149,17 +149,17 @@ elif st.session_state.reset_mode:
                         st.error("Пользователь не найден")
                 else:
                     st.warning("Введите имя пользователя")
-        
+
         with col2:
             if st.button("Отмена"):
                 st.session_state.reset_mode = False
                 st.rerun()
-    
+
     with tab2:
         token_input = st.text_input("Введите токен восстановления", key="token_input")
-        
+
         col1, col2 = st.columns(2)
-        
+
         with col1:
             if st.button("Использовать токен", type="primary"):
                 if token_input:
@@ -171,12 +171,12 @@ elif st.session_state.reset_mode:
                         st.error("⚠️ Токен недействителен или истек")
                 else:
                     st.warning("Введите токен")
-        
+
         with col2:
             if st.button("Отмена", key="cancel_token"):
                 st.session_state.reset_mode = False
                 st.rerun()
-    
+
     st.markdown("---")
     if st.button("← Вернуться к входу"):
         st.session_state.reset_mode = False
@@ -188,33 +188,54 @@ else:
     with st.form("login_form", clear_on_submit=False):
         st.markdown("### Вход в систему")
         st.markdown("---")
-        
+
         username = st.text_input(
-            "👤 Имя пользователя", 
+            "👤 Имя пользователя",
             key="login_username",
             placeholder="Введите имя пользователя",
-            autocomplete="username"
+            # autocomplete="username",
+            autocomplete="off",
+            value="",
         )
-        
+
         password = st.text_input(
-            "🔒 Пароль", 
-            type="password", 
+            "🔒 Пароль",
+            type="password",
             key="login_password",
             placeholder="Введите пароль",
-            autocomplete="current-password"
+            # autocomplete="current-password"
+            autocomplete="new-password",
+            value="",
         )
-        
-        col1, col2 = st.columns([2, 1])
-        
-        with col1:
-            submit_button = st.form_submit_button("🚀 Войти", type="primary", use_container_width=True)
-        
-        with col2:
-            if st.form_submit_button("❓ Забыли пароль?", use_container_width=True):
-                st.session_state.reset_mode = True
-                st.rerun()
-        
-        if submit_button:
+
+        # col1, col2 = st.columns([2, 1])
+
+        # with col1:
+        #     submit_button = st.form_submit_button("🚀 Войти", type="primary", use_container_width=True)
+        #
+        # with col2:
+        #     if st.form_submit_button("❓ Забыли пароль?", use_container_width=True):
+        #         st.session_state.reset_mode = True
+        #         st.rerun()
+        #
+        # if submit_button:
+        #     if username and password:
+        #         success, user = authenticate(username, password)
+        #         if success and user:
+        #             st.session_state.authenticated = True
+        #             st.session_state.user = user
+        #             st.success(f"✅ Добро пожаловать, {user['username']}!")
+        #             st.balloons()
+        #             import time
+        #             time.sleep(1)
+        #             st.switch_page("project_visualization_app.py")
+        #         else:
+        #             st.error("❌ Неверное имя пользователя или пароль")
+        #     else:
+        #         st.warning("⚠️ Заполните все поля")
+
+        # Кнопка "Войти" — на всю ширину, primary (красная/акцентная)
+        if st.form_submit_button("🚀 Войти", type="primary", use_container_width=True):
             if username and password:
                 success, user = authenticate(username, password)
                 if success and user:
@@ -229,9 +250,14 @@ else:
                     st.error("❌ Неверное имя пользователя или пароль")
             else:
                 st.warning("⚠️ Заполните все поля")
-    
+
+        # Кнопка "Забыли пароль?" — на всю ширину, вторая по важности
+        if st.form_submit_button("❓ Забыли пароль?", use_container_width=True):
+            st.session_state.reset_mode = True
+            st.rerun()
+
     st.markdown("---")
-    
+
     # Информация о демо-доступе
     with st.expander("ℹ️ Демо-доступ", expanded=False):
         st.markdown("""
@@ -240,4 +266,3 @@ else:
         - **Пароль:** `admin123`
         - **Роль:** Суперадминистратор
         """)
-

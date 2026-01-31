@@ -2,21 +2,47 @@
 
 :root {
     /* Цвета фона темы */
-    --themeBackgroundColor: white;  
+    --themeBackgroundColor: hsl(190,40%,98%);
+    --themeBackgroundColor: hsl(210,67%,96%);
+    --themeBackgroundColor: hsl(216,28%,7%);
     /* --themeBackgroundColor: #0e1117;      */
-    
+
+    --sidebarBackgroundColor: hsl(214,25%,11%);
+    --thinLinesColor: hsl(214,12%,27%);
+
     /* Основной шрифт */
     --mainFont: 'Inter', sans-serif;
-    
+
     /* Цвет фона графиков */
     /* --graphBackgroundColor: #0e1117;      */
-    --graphBackgroundColor: hotpink;
+    /* --graphBackgroundColor: hsl(190,40%,98%); */
 }
 
-/* 
+/*
 Применяется последнее значение --themeBackgroundColor (#0e1117 - темная тема)
 Чтобы использовать светлую тему, закомментируйте строку 6 и раскомментируйте строку 5
 */
+
+/* Боковое меню целиком */
+
+[data-testid="stSidebar"] {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    background-color: var(--sidebarBackgroundColor) !important;
+}
+section[data-testid="stSidebar"] > div:first-child {
+    width: calc(100% - 1px) !important;
+    height: 100% !important;
+    border-right: 1px solid var(--thinLinesColor) !important;
+    background-color: var(--sidebarBackgroundColor) !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+
+/* Если есть градиент или другие слои — перебиваем */
+[data-testid="stSidebar"] * {
+    background-color: transparent !important;  /* если нужно сбросить вложенные */
+}
 
 /* ==================== ОСНОВНЫЕ СТИЛИ ==================== */
 
@@ -73,7 +99,7 @@ span:not(.material-icons) {
 }
 
 /* Применение шрифта к элементам Streamlit */
-body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox, 
+body, html, .stApp, .stMarkdown, .stText, .stButton, .stSelectbox,
 .stTextInput, .stNumberInput, .stDateInput, .stCheckbox, .stMultiSelect {
     font-family: var(--mainFont) !important;
 }
@@ -128,6 +154,7 @@ form[data-testid="stForm"] {
 /* ==================== ПОЛЯ ВВОДА ==================== */
 
 /* Стилизация полей ввода - подсветка для видимости на темном фоне */
+/*
 .stTextInput > div > div > input,
 .stTextInput > div > div > input:focus,
 input[type="text"],
@@ -152,6 +179,191 @@ textarea:focus {
     box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
     outline: none !important;
 }
+*/
+
+/* .stTextInput > div > div > input,
+.stTextInput > div > div > input:focus,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea {
+    background-color: #2a2a3a !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    border-radius: 4px !important;
+    padding: 0.5rem !important;
+}
+
+.stTextInput > div > div > input:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #1f77b4 !important;
+    box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
+    outline: none !important;
+} */
+
+
+
+
+/*
+div[data-testid="stTextInput"] > div,
+div[data-baseweb="input"] > div,
+div[data-baseweb="input"] {
+    overflow: visible !important;
+    padding: 0 !important;
+}
+
+
+[data-testid="stTextInputRootElement"],
+[data-testid="stTextInputRootElement"] * {
+    box-shadow: none !important;
+}
+
+[data-testid="stTextInputRootElement"]:focus-within,
+[data-testid="stTextInputRootElement"] input:focus {
+    box-shadow: none !important;
+}
+
+
+
+.stApp [data-testid="stTextInput"] input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.stApp input[type="password"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+} */
+
+/* Скрываем подсказку "Press Enter to submit form" */
+div[data-testid="stFormSubmitButton"]::after,
+div[data-testid="stForm"] button::after,
+.stForm button::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* На всякий случай — для всех кнопок внутри формы */
+.stForm .stButton > button::after {
+    content: none !important;
+}
+
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #2a2a3a inset !important;  /* твой фон input */
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+
+
+
+input{
+    /* width: calc(100% - 79px);
+    height: 29px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; */
+    /* font: 300 normal .884rem/1.4 'Inter', sans-serif;
+    letter-spacing: .008em;
+    text-indent: 0; */
+    color: hsl(215,41%,8%) !important;
+    background-color: transparent !important;
+    overflow: none !important;
+    outline: none !important;
+    resize: none !important;
+    border-radius: 4px !important;
+    /* padding: 6px 11px 5px 66px !important;
+    margin: 4px 0 0 0 !important; */
+    box-shadow: none !important;
+    border: none !important;
+    transition: border .08s ease-in-out 0s !important;
+}
+/* input:not(:focus){
+    border: 1px solid hsl(214,34%,80%) !important;
+}
+input:focus{
+    border: 1px solid hsl(181,54%,50%) !important;
+} */
+
+
+
+textarea{
+    /* width: calc(100% - 24px);
+    min-height: 60px;
+    height: calc(100% - 25px); */
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; */
+    /* font: 300 normal .884rem/1.4 'Inter', sans-serif;
+    letter-spacing: .008em;
+    text-indent: 0; */
+    color: hsl(215,41%,8%) !important;
+    background-color: transparent !important;
+    overflow: none !important;
+    outline: none !important;
+    resize: none !important;
+    /* border-radius: 3px !important; */
+    border-radius: 4px !important;
+    box-shadow: 0 0 0 0 none !important;
+    /* padding: 15px 11px 8px 11px !important;
+    margin: 4px 0 0 0 !important; */
+    transition: border .08s ease-in-out 0s !important;
+}
+textarea:not(:focus){
+    border: 1px solid hsl(214,34%,80%) !important;
+}
+textarea:focus{
+    border: 1px solid hsl(181,54%,50%) !important;
+}
+
+
+
+
+/* ┌────────────────────────────────────────────────────────────────────────┐ */
+/* │ ⊗ КНОПКИ В АДМИНКЕ ¤ Start                                             │ */
+/* └────────────────────────────────────────────────────────────────────────┘ */
+
+/* Принудительное размещение кнопок формы одна под другой */
+[data-testid="stForm"] button {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 10px !important;
+}
+
+/* Убираем flex-контейнер для кнопок формы */
+[data-testid="stForm"] [data-testid="column"] {
+    width: 100% !important;
+}
+
+/* Контейнер кнопок формы */
+[data-testid="stForm"] > div > div {
+    display: block !important;
+}
+
+/* Дополнительная страховка для кнопок в форме */
+[data-testid="stForm"] [data-testid="stFormSubmitButton"] {
+    width: 100% !important;
+}
+
+/* ┌────────────────────────────────────────────────────────────────────────┐ */
+/* │ ⊗ КНОПКИ В АДМИНКЕ ¤ End                                               │ */
+/* └────────────────────────────────────────────────────────────────────────┘ */
+
+
+
+
 
 /* ==================== КНОПКИ ==================== */
 
@@ -214,7 +426,7 @@ textarea:focus {
 
 /* ==================== SELECTBOX ==================== */
 
-.stSelectbox > div > div > select {
+/* .stSelectbox > div > div > select {
     background-color: #2a2a3a !important;
     color: #ffffff !important;
     border: 1px solid #4a5568 !important;
@@ -225,7 +437,7 @@ textarea:focus {
     border-color: #1f77b4 !important;
     box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
     outline: none !important;
-}
+} */
 
 /* ==================== CHECKBOX ==================== */
 
@@ -235,15 +447,15 @@ textarea:focus {
 
 /* ==================== DATE INPUT ==================== */
 
-.stDateInput > div > div > input {
+/* .stDateInput > div > div > input {
     background-color: #2a2a3a !important;
     color: #ffffff !important;
     border: 1px solid #4a5568 !important;
-}
+} */
 
 /* ==================== NUMBER INPUT ==================== */
 
-.stNumberInput > div > div > input {
+/* .stNumberInput > div > div > input {
     background-color: #2a2a3a !important;
     color: #ffffff !important;
     border: 1px solid #4a5568 !important;
@@ -254,7 +466,7 @@ textarea:focus {
     border-color: #1f77b4 !important;
     box-shadow: 0 0 0 2px rgba(31, 119, 180, 0.2) !important;
     outline: none !important;
-}
+} */
 
 /* ==================== MULTISELECT ==================== */
 
@@ -271,11 +483,3 @@ textarea:focus {
     border: 1px solid #4a5568 !important;
     border-radius: 4px !important;
 }
-
-/* ==================== ГРАФИКИ PLOTLY ==================== */
-
-/* Применение цвета фона только к фону графиков Plotly */
-svg.main-svg {
-    background-color: var(--graphBackgroundColor) !important;
-}
-
