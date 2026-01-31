@@ -239,7 +239,7 @@ div[data-baseweb="input"] {
     box-shadow: none !important;
 } */
 
-/* Скрываем подсказку "Press Enter to submit form" */
+/* Скрываем подсказку "Press Enter to submit form"
 div[data-testid="stFormSubmitButton"]::after,
 div[data-testid="stForm"] button::after,
 .stForm button::after {
@@ -247,7 +247,7 @@ div[data-testid="stForm"] button::after,
     display: none !important;
 }
 
-/* На всякий случай — для всех кнопок внутри формы */
+На всякий случай — для всех кнопок внутри формы
 .stForm .stButton > button::after {
     content: none !important;
 }
@@ -258,10 +258,10 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #2a2a3a inset !important;  /* твой фон input */
+    -webkit-box-shadow: 0 0 0 30px #2a2a3a inset !important;
     -webkit-text-fill-color: #ffffff !important;
     transition: background-color 5000s ease-in-out 0s;
-}
+} */
 
 
 
