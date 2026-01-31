@@ -199,6 +199,7 @@ elif st.session_state.reset_mode:
 
 # Режим входа
 else:
+
     # Форма входа
     with st.form("login_form", clear_on_submit=False):
         st.markdown("### Вход в систему")
@@ -208,7 +209,6 @@ else:
             "👤 Имя пользователя",
             key="login_username",
             placeholder="Введите имя пользователя",
-            # autocomplete="username",
             autocomplete="off",
             value="",
         )
@@ -218,39 +218,19 @@ else:
             type="password",
             key="login_password",
             placeholder="Введите пароль",
-            # autocomplete="current-password"
             autocomplete="new-password",
             value="",
         )
 
-        # col1, col2 = st.columns([2, 1])
-
-        # with col1:
-        #     submit_button = st.form_submit_button("🚀 Войти", type="primary", use_container_width=True)
-        #
-        # with col2:
-        #     if st.form_submit_button("❓ Забыли пароль?", use_container_width=True):
-        #         st.session_state.reset_mode = True
-        #         st.rerun()
-        #
-        # if submit_button:
-        #     if username and password:
-        #         success, user = authenticate(username, password)
-        #         if success and user:
-        #             st.session_state.authenticated = True
-        #             st.session_state.user = user
-        #             st.success(f"✅ Добро пожаловать, {user['username']}!")
-        #             st.balloons()
-        #             import time
-        #             time.sleep(1)
-        #             st.switch_page("project_visualization_app.py")
-        #         else:
-        #             st.error("❌ Неверное имя пользователя или пароль")
-        #     else:
-        #         st.warning("⚠️ Заполните все поля")
+        st.markdown("<br>", unsafe_allow_html=True)  # Небольшой отступ
 
         # Кнопка "Войти" — на всю ширину, primary (красная/акцентная)
-        if st.form_submit_button("🚀 Войти", type="primary", use_container_width=True):
+        submit_login = st.form_submit_button("🚀 Войти", type="primary", use_container_width=True)
+
+        # Кнопка "Забыли пароль?" — на всю ширину, вторая по важности
+        submit_reset = st.form_submit_button("❓ Забыли пароль?", use_container_width=True)
+
+        if submit_login:
             if username and password:
                 success, user = authenticate(username, password)
                 if success and user:
@@ -266,8 +246,7 @@ else:
             else:
                 st.warning("⚠️ Заполните все поля")
 
-        # Кнопка "Забыли пароль?" — на всю ширину, вторая по важности
-        if st.form_submit_button("❓ Забыли пароль?", use_container_width=True):
+        if submit_reset:
             st.session_state.reset_mode = True
             st.rerun()
 
