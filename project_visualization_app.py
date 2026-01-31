@@ -6725,14 +6725,18 @@ def main():
                         "👤 Имя пользователя",
                         key="login_username",
                         placeholder="Введите имя пользователя",
-                        autocomplete="username"
+                        # autocomplete="username",
+                        autocomplete="off",
+                        value=""
                     )
                     password = st.text_input(
                         "🔒 Пароль",
                         type="password",
                         key="login_password",
                         placeholder="Введите пароль",
-                        autocomplete="current-password"
+                        # autocomplete="current-password",
+                        autocomplete="new-password",
+                        value=""
                     )
 
                     # ИСПРАВЛЕНИЕ: убираем колонки, делаем кнопки одна под другой
