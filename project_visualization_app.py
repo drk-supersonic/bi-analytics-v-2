@@ -6719,8 +6719,14 @@ def main():
             col_left, col_center, col_right = st.columns([2, 1.5, 2])
             with col_center:
                 with st.form("login_form", clear_on_submit=False):
+
                     st.markdown("### Вход в систему")
-                    st.markdown("---")
+                    # st.markdown("---")
+
+                    # Скрытое поле-ловушка для браузера
+                    st.markdown('<input type="text" style="display:none" autocomplete="username">', unsafe_allow_html=True)
+                    st.markdown('<input type="password" style="display:none" autocomplete="new-password">', unsafe_allow_html=True)
+
                     username = st.text_input(
                         "👤 Имя пользователя",
                         key="login_username",
@@ -6766,7 +6772,7 @@ def main():
                         st.session_state.reset_mode = True
                         st.rerun()
 
-                st.markdown("---")
+                # st.markdown("---")
                 # Информация о демо-доступе
                 with st.expander("ℹ️ Демо-доступ", expanded=False):
                     st.markdown("""
